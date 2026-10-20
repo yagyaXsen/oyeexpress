@@ -30,33 +30,28 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 flex h-full flex-col justify-end px-gutter pt-[calc(var(--header-h)+24px)] pb-10 lg:pb-14">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-2" data-hero-fade>
-          <span className="eyebrow text-bronze">Furniture sourcing</span>
-          <span aria-hidden="true" className="h-px w-8 bg-bronze/60" />
-          <span className="eyebrow text-ivory/85">Foshan, China → Worldwide</span>
-        </div>
+        <p className="eyebrow text-ivory/85" data-hero-fade>
+          Foshan <span aria-hidden="true" className="mx-1.5 text-bronze">→</span> Worldwide
+        </p>
 
-        <h1 id="hero-title" className="serif mt-6 text-[clamp(44px,7.6vw,116px)] leading-[0.95] tracking-[-0.03em] lg:mt-8">
-          <span data-rise className="-mb-[0.1em] block overflow-hidden pb-[0.1em]"><span className="block">Premium furniture.</span></span>
-          <span data-rise className="-mb-[0.1em] block overflow-hidden pb-[0.1em]"><span className="block text-[#E4CFAE] italic">Sourced in Foshan.</span></span>
-          <span data-rise className="-mb-[0.1em] block overflow-hidden pb-[0.1em]"><span className="block">Delivered worldwide.</span></span>
+        <h1 id="hero-title" className="t-display mt-5 lg:mt-6">
+          <span data-rise className="-mb-[0.08em] block overflow-hidden pb-[0.08em]"><span className="block">Premium furniture,</span></span>
+          <span data-rise className="-mb-[0.08em] block overflow-hidden pb-[0.08em]"><span className="block">sourced in Foshan.</span></span>
         </h1>
 
-        <div className="mt-8 grid gap-8 lg:mt-10 lg:grid-cols-12 lg:items-end lg:gap-6">
-          <p data-hero-fade className="max-w-[580px] text-[17px] leading-[1.6] text-ivory/90 lg:col-span-7 lg:text-[19px]">
-            OyeExpress helps you source bespoke and premium furniture from Foshan, China, with sourcing, customisation, quality inspection and delivery handled for you.
-          </p>
-          <div data-hero-fade className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8 lg:col-span-5 lg:justify-end">
-            <Button href="#enquire" magnetic className="w-full sm:w-auto">Start your project</Button>
-            <a href="#collections" className="eyebrow link-line self-center text-ivory sm:self-auto">Explore our collection</a>
-          </div>
+        <p data-hero-fade className="t-lead mt-6 max-w-[520px] text-ivory/90 lg:mt-8">
+          Bespoke sourcing, customisation and delivery for residential and commercial projects.
+        </p>
+        <div data-hero-fade className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4 lg:mt-10">
+          <Button href="#enquire" magnetic>Start your project</Button>
+          <Button href="#collections" variant="outline" arrow={false}>View collections</Button>
         </div>
 
-        <ol aria-label="What we handle" data-hero-fade className="mt-10 hidden items-center gap-5 border-t border-ivory/20 pt-5 md:flex lg:mt-12">
+        <ol aria-label="What we handle" data-hero-fade className="mt-12 hidden items-center gap-5 border-t border-ivory/20 pt-5 md:flex lg:mt-14">
           {['Sourcing', 'Customisation', 'Quality check', 'Shipping', 'Delivery'].map((s, i) => (
             <li key={s} className="flex flex-1 items-center gap-3">
               <span className="caption text-bronze">{String(i + 1).padStart(2, '0')}</span>
-              <span className="eyebrow text-ivory/85">{s}</span>
+              <span className="caption text-ivory/85">{s}</span>
             </li>
           ))}
         </ol>

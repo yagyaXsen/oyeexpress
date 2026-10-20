@@ -4,7 +4,7 @@
 /* ------------------------------------------------------------------
    OyeExpress design tokens
    Two grounds (ink, paper) used in alternation. Bronze appears once
-   per view. Display: Bodoni Moda · Labels: Archivo extended · Captions: DM Mono
+   per view. Type: Instrument Serif (display, sparingly) + Manrope (everything else)
    ------------------------------------------------------------------ */
 @theme {
   --color-ink: #0d0c0a;
@@ -18,9 +18,8 @@
   --color-oxide: #7a5a33;
   --color-coal: #16130f;
 
-  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
-  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", sans-serif;
 
   --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -43,27 +42,65 @@
 @utility bleed-l { margin-left: calc(var(--gutter) * -1); }
 @utility bleed-x { margin-inline: calc(var(--gutter) * -1); }
 
-/* type roles */
+/* ------------------------------------------------------------------
+   Type system: Manrope for everything functional; Instrument Serif
+   (roman only) for the hero and a few editorial moments.
+     eyebrow    12px / 600 / uppercase   section labels, small titles
+     caption    13px / 500               metadata, captions, form labels
+     t-body     17px                     body copy
+     t-lead     18–20px                  introductions
+     t-h3       20px / 600               card and step titles
+     t-h2       30–60px / 500            section headings (sans)
+     t-display  44–100px serif           hero only
+     t-statement 28–46px serif           About, testimonial, closing
+   ------------------------------------------------------------------ */
 @utility serif {
   font-family: var(--font-display);
   font-weight: 400;
-  font-optical-sizing: auto;
+  font-style: normal;
+  letter-spacing: -0.005em;
 }
 @utility eyebrow {
   font-family: var(--font-sans);
-  font-stretch: 125%;
-  font-weight: 500;
-  font-size: 10.5px;
+  font-weight: 600;
+  font-size: 12px;
   line-height: 1.4;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 @utility caption {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+@utility t-body { font-size: 17px; line-height: 1.65; font-weight: 400; }
+@utility t-lead {
+  font-size: 18px; line-height: 1.6; font-weight: 400;
+  @media (min-width: 1024px) { font-size: 20px; }
+}
+@utility t-h3 { font-size: 20px; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; }
+@utility t-h2 {
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: clamp(30px, 4.2vw, 60px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+@utility t-display {
+  font-family: var(--font-display);
   font-weight: 400;
-  font-size: 11px;
-  line-height: 1.55;
-  letter-spacing: 0.01em;
+  font-size: clamp(44px, 6.6vw, 100px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+@utility t-statement {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1.18;
+  letter-spacing: -0.005em;
 }
 
 @layer base {
@@ -74,7 +111,7 @@
   }
   body {
     font-family: var(--font-sans);
-    font-weight: 300;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -92,25 +129,30 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 18px;
-    min-height: 56px;
-    padding: 0 28px;
+    gap: 14px;
+    min-height: 52px;
+    padding: 0 26px;
     font-family: var(--font-sans);
-    font-stretch: 125%;
-    font-weight: 500;
-    font-size: 10.5px;
-    letter-spacing: 0.16em;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
+    white-space: nowrap;
     background: var(--color-ivory);
     color: var(--color-ink);
     border: 1px solid var(--color-ivory);
-    transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+    transition: background-color 0.4s, border-color 0.4s, color 0.4s;
   }
-  .btn:hover { background: var(--color-bronze); border-color: var(--color-bronze); }
-  .btn svg { transition: transform 0.7s var(--ease-expo); }
-  .btn:hover svg { transform: translateX(4px); }
+  .btn:hover { background: var(--color-bronze); border-color: var(--color-bronze); color: var(--color-ink); }
+  .btn svg { transition: transform 0.6s var(--ease-expo); }
+  .btn:hover svg { transform: translateX(3px); }
+  .btn-outline { background: transparent; color: var(--color-ivory); border-color: rgba(239, 233, 222, 0.45); }
+  .btn-outline:hover { background: var(--color-ivory); border-color: var(--color-ivory); color: var(--color-ink); }
   .btn-ink { background: var(--color-coal); color: var(--color-paper); border-color: var(--color-coal); }
   .btn-ink:hover { background: var(--color-oxide); border-color: var(--color-oxide); color: var(--color-paper); }
+  .btn-outline-ink { background: transparent; color: var(--color-coal); border-color: rgba(22, 19, 15, 0.35); }
+  .btn-outline-ink:hover { background: var(--color-coal); border-color: var(--color-coal); color: var(--color-paper); }
+  .btn-sm { min-height: 42px; padding: 0 18px; font-size: 12px; }
   .btn[disabled] { opacity: 0.5; pointer-events: none; }
 
   .link-line { position: relative; padding-bottom: 6px; display: inline-block; }
@@ -156,7 +198,7 @@
     top: calc(2% + 12px);
     right: 14px;
     z-index: 3;
-    font: 400 9.5px/1.45 var(--font-mono);
+    font: 500 11px/1.45 var(--font-sans);
     letter-spacing: 0.02em;
     color: rgba(239, 233, 222, 0.62);
     white-space: nowrap;

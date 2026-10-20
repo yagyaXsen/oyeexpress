@@ -161,8 +161,8 @@ export function ChairSketch() {
         <path d="M64 304H336M64 299V309M336 299V309" />
         <path d="M364 78V280M359 78H369M359 280H369" />
       </g>
-      <text x="200" y="320" fill="#7A5A33" fontFamily="DM Mono, monospace" fontSize="7" textAnchor="middle">W — to your measure</text>
-      <text x="380" y="180" fill="#7A5A33" fontFamily="DM Mono, monospace" fontSize="7" textAnchor="middle" transform="rotate(90 380 180)">H — to your measure</text>
+      <text x="200" y="320" fill="#7A5A33" fontFamily="Manrope, sans-serif" fontSize="7" textAnchor="middle">W — to your measure</text>
+      <text x="380" y="180" fill="#7A5A33" fontFamily="Manrope, sans-serif" fontSize="7" textAnchor="middle" transform="rotate(90 380 180)">H — to your measure</text>
     </svg>
   )
 }

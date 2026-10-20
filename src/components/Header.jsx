@@ -56,26 +56,24 @@ export default function Header() {
             scrolled ? 'h-16' : 'h-(--header-h)'
           }`}
         >
-          <nav aria-label="Primary" className="hidden gap-9 xl:flex">
+          <nav aria-label="Primary" className="hidden gap-8 xl:flex">
             {nav.left.map((l) => (
-              <a key={l.href} href={l.href} className="eyebrow transition-colors hover:text-bronze">{l.label}</a>
+              <a key={l.href} href={l.href} className="text-[14px] font-medium text-ivory/90 transition-colors hover:text-bronze">{l.label}</a>
             ))}
           </nav>
-          <a href="#top" className="serif col-start-2 text-[22px] tracking-[-0.005em] whitespace-nowrap lg:text-[25px]" aria-label="OyeExpress, back to top">
+          <a href="#top" className="serif col-start-2 text-[24px] whitespace-nowrap lg:text-[26px]" aria-label="OyeExpress, back to top">
             OyeExpress
           </a>
           <div className="col-start-3 flex items-center justify-end gap-9">
-            <nav aria-label="Secondary" className="hidden gap-9 xl:flex">
+            <nav aria-label="Secondary" className="hidden gap-8 xl:flex">
               {nav.right.map((l) => (
-                <a key={l.href} href={l.href} className="eyebrow transition-colors hover:text-bronze">{l.label}</a>
+                <a key={l.href} href={l.href} className="text-[14px] font-medium text-ivory/90 transition-colors hover:text-bronze">{l.label}</a>
               ))}
             </nav>
-            <a href="#enquire" className="eyebrow hidden border border-ivory/45 px-[18px] py-[13px] whitespace-nowrap transition-colors hover:border-bronze hover:text-bronze lg:inline-block">
-              Start a Project
-            </a>
+            <Button href="#enquire" variant="outline" size="sm" arrow={false} className="hidden! lg:inline-flex!">Start a project</Button>
             <button
               type="button"
-              className="eyebrow -mr-2 flex min-h-11 items-center gap-3 px-2 xl:hidden"
+              className="-mr-2 flex min-h-11 items-center gap-3 px-2 text-[14px] font-medium xl:hidden"
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen((o) => !o)}
@@ -134,18 +132,18 @@ function MobileMenu({ open, onClose }) {
             tabIndex={open ? 0 : -1}
             className="flex items-baseline justify-between overflow-hidden border-b border-ivory/15 py-3.5 md:py-5"
           >
-            <span data-menu-item className={`serif block text-[clamp(34px,8vw,64px)] leading-[1.05] ${l.label === 'Foshan' ? 'italic' : ''}`}>{l.label}</span>
-            <span data-menu-item className="caption block text-mute">{['I', 'II', 'III', 'IV', 'V', 'VI'][i]}</span>
+            <span data-menu-item className="block text-[clamp(26px,6vw,40px)] leading-[1.2] font-medium tracking-[-0.02em]">{l.label}</span>
+            <span data-menu-item className="caption block text-mute">{String(i + 1).padStart(2, '0')}</span>
           </a>
         ))}
       </nav>
       <div data-menu-fade className="mt-auto flex flex-col gap-5 pt-10">
-        <div className="caption flex gap-6 text-mute">
+        <div className="flex gap-6 text-[15px] text-ivory/75">
           <a href={contact.instagram} tabIndex={open ? 0 : -1} className="hover:text-ivory">Instagram</a>
           <a href={contact.whatsapp || '#enquire'} onClick={onClose} tabIndex={open ? 0 : -1} className="hover:text-ivory">WhatsApp</a>
           <a href={contact.email || '#enquire'} onClick={onClose} tabIndex={open ? 0 : -1} className="hover:text-ivory">Email</a>
         </div>
-        <Button href="#enquire" onClick={onClose} tabIndex={open ? 0 : -1} className="w-full">Start a Project</Button>
+        <Button href="#enquire" onClick={onClose} tabIndex={open ? 0 : -1} className="w-full">Start a project</Button>
       </div>
     </div>
   )
