@@ -1,0 +1,326 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+
+/* ------------------------------------------------------------------
+   OyeExpress design tokens
+   Two grounds (ink, paper) used in alternation. Bronze appears once
+   per view. Display: Bodoni Moda · Labels: Archivo extended · Captions: DM Mono
+   ------------------------------------------------------------------ */
+@theme {
+  --color-ink: #0d0c0a;
+  --color-umber: #141210;
+  --color-night: #100e0c;
+  --color-paper: #ece6da;
+  --color-ivory: #efe9de;
+  --color-mute: #9c9486;
+  --color-stone: #5f584d;
+  --color-bronze: #b89668;
+  --color-oxide: #7a5a33;
+  --color-coal: #16130f;
+
+  --font-display: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --font-sans: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  --gutter: 20px;
+  --header-h: 64px;
+}
+@media (min-width: 768px) {
+  :root { --gutter: 32px; }
+}
+@media (min-width: 1024px) {
+  :root { --gutter: 48px; --header-h: 84px; }
+}
+
+/* layout helpers */
+@utility px-gutter { padding-inline: var(--gutter); }
+@utility pl-gutter { padding-left: var(--gutter); }
+@utility bleed-r { margin-right: calc(var(--gutter) * -1); }
+@utility bleed-l { margin-left: calc(var(--gutter) * -1); }
+@utility bleed-x { margin-inline: calc(var(--gutter) * -1); }
+
+/* type roles */
+@utility serif {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-optical-sizing: auto;
+}
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-stretch: 125%;
+  font-weight: 500;
+  font-size: 10.5px;
+  line-height: 1.4;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+@utility caption {
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color: var(--color-ivory);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--color-bronze); color: var(--color-ink); }
+  :focus-visible { outline: 1px solid var(--color-bronze); outline-offset: 4px; }
+  img, video, svg { display: block; }
+  button { cursor: pointer; font: inherit; color: inherit; }
+}
+
+@layer components {
+  /* ---------- buttons & links ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    min-height: 56px;
+    padding: 0 28px;
+    font-family: var(--font-sans);
+    font-stretch: 125%;
+    font-weight: 500;
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    background: var(--color-ivory);
+    color: var(--color-ink);
+    border: 1px solid var(--color-ivory);
+    transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+  }
+  .btn:hover { background: var(--color-bronze); border-color: var(--color-bronze); }
+  .btn svg { transition: transform 0.7s var(--ease-expo); }
+  .btn:hover svg { transform: translateX(4px); }
+  .btn-ink { background: var(--color-coal); color: var(--color-paper); border-color: var(--color-coal); }
+  .btn-ink:hover { background: var(--color-oxide); border-color: var(--color-oxide); color: var(--color-paper); }
+  .btn[disabled] { opacity: 0.5; pointer-events: none; }
+
+  .link-line { position: relative; padding-bottom: 6px; display: inline-block; }
+  .link-line::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform-origin: right;
+    transition: transform 0.8s var(--ease-expo);
+  }
+  .link-line:hover::after { transform: scaleX(0); }
+
+  .folio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-top: 18px;
+    border-top: 1px solid;
+  }
+
+  /* ---------- media slots ---------- */
+  .media { position: relative; overflow: hidden; isolation: isolate; background: #1a1612; }
+  .media-fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* Designed placeholders. Each `.scene-*` stands in for a photograph
+     until `src` is set in src/content/assets.js. */
+  .scene { position: absolute; inset: -2%; overflow: hidden; }
+  .scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(ellipse 90% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.42));
+  }
+  .slot-tag {
+    position: absolute;
+    left: calc(2% + 14px);
+    top: calc(2% + 12px);
+    right: 14px;
+    z-index: 3;
+    font: 400 9.5px/1.45 var(--font-mono);
+    letter-spacing: 0.02em;
+    color: rgba(239, 233, 222, 0.62);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .slot-tag.on-light { color: rgba(30, 26, 20, 0.6); }
+
+  .scene-room { background: linear-gradient(180deg, #1c1712, #13100c); }
+  .scene-dusk {
+    background:
+      radial-gradient(ellipse 20% 34% at 74% 40%, rgba(255, 206, 150, 0.62), transparent 70%),
+      linear-gradient(90deg, transparent 64%, rgba(255, 196, 130, 0.15) 64%, rgba(255, 196, 130, 0.08) 84%, transparent 84%) 0 0 / 100% 66% no-repeat,
+      linear-gradient(180deg, transparent 66%, rgba(0, 0, 0, 0.5) 66.2%, rgba(0, 0, 0, 0.2) 100%),
+      linear-gradient(90deg, #16110c, #2a1f16 60%, #19120d);
+  }
+  .scene-shaft {
+    background:
+      linear-gradient(118deg, transparent 38%, rgba(255, 232, 196, 0.24) 38.4%, rgba(255, 232, 196, 0.16) 46%, transparent 46.4%, transparent 52%, rgba(255, 232, 196, 0.15) 52.4%, rgba(255, 232, 196, 0.09) 58%, transparent 58.4%),
+      linear-gradient(180deg, #25201a 0 58%, #3a3026 58.2% 100%);
+  }
+  .scene-lamp {
+    background:
+      radial-gradient(circle at 26% 30%, rgba(255, 206, 140, 0.72), rgba(230, 160, 90, 0.18) 15%, transparent 38%),
+      linear-gradient(180deg, transparent 70%, rgba(0, 0, 0, 0.4) 70.2%),
+      linear-gradient(160deg, #241b13, #0b0907);
+  }
+  .scene-bed {
+    background:
+      radial-gradient(ellipse 46% 20% at 50% 74%, rgba(236, 222, 200, 0.3), transparent 70%),
+      radial-gradient(circle at 84% 24%, rgba(255, 200, 140, 0.5), transparent 20%),
+      linear-gradient(180deg, #29221b, #100d0a);
+  }
+  .scene-outdoor {
+    background:
+      radial-gradient(ellipse 90% 40% at 50% 0%, rgba(240, 206, 156, 0.38), transparent 70%),
+      linear-gradient(180deg, #3a3328 0%, #2b2a22 54%, #1d1b16 54.3%, #121110 100%);
+  }
+  .scene-pendant {
+    background:
+      radial-gradient(circle at 50% 36%, rgba(255, 216, 154, 0.9), rgba(222, 160, 90, 0.22) 10%, transparent 34%),
+      linear-gradient(180deg, #16110d, #090706);
+  }
+  .scene-wardrobe {
+    background:
+      repeating-linear-gradient(90deg, transparent 0 22%, rgba(255, 214, 160, 0.32) 22% 22.4%, transparent 22.4% 25%),
+      repeating-linear-gradient(91deg, rgba(0, 0, 0, 0.16) 0 1px, transparent 1px 7px, rgba(0, 0, 0, 0.06) 7px 9px, transparent 9px 19px),
+      linear-gradient(180deg, rgba(255, 200, 140, 0.22), transparent 40%),
+      linear-gradient(180deg, #4e321c, #24160c);
+  }
+  .scene-atelier {
+    background:
+      radial-gradient(ellipse 50% 45% at 50% 55%, rgba(232, 184, 124, 0.24), transparent 70%),
+      linear-gradient(180deg, transparent 72%, rgba(0, 0, 0, 0.35) 72.2%),
+      linear-gradient(180deg, #1f1913, #0b0907);
+  }
+  .scene-spot {
+    background:
+      radial-gradient(ellipse 42% 52% at 50% 50%, rgba(232, 184, 124, 0.22), transparent 70%),
+      linear-gradient(180deg, #1d1712, #0b0907);
+  }
+  .scene-paper {
+    background:
+      linear-gradient(rgba(59, 53, 45, 0.07) 1px, transparent 1px) 0 0 / 28px 28px,
+      linear-gradient(90deg, rgba(59, 53, 45, 0.07) 1px, transparent 1px) 0 0 / 28px 28px,
+      #e8e1d3;
+  }
+  .scene-paper::after { display: none; }
+  .scene-market {
+    background:
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0 3px, transparent 3px 140px),
+      radial-gradient(ellipse 18% 30% at 30% 42%, rgba(240, 196, 140, 0.5), transparent 70%),
+      radial-gradient(ellipse 14% 24% at 62% 46%, rgba(240, 196, 140, 0.38), transparent 70%),
+      radial-gradient(ellipse 10% 18% at 84% 48%, rgba(240, 196, 140, 0.3), transparent 70%),
+      linear-gradient(180deg, #2c241c 0 62%, #3a2f24 62.2%, #14100c);
+  }
+  .scene-factory {
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 228, 184, 0.16) 0 34px, transparent 34px 130px) 0 6% / 100% 4% no-repeat,
+      repeating-linear-gradient(90deg, rgba(255, 228, 184, 0.1) 0 22px, transparent 22px 90px) 0 20% / 100% 3% no-repeat,
+      radial-gradient(ellipse 70% 40% at 50% 100%, rgba(196, 150, 96, 0.28), transparent 70%),
+      linear-gradient(180deg, #211b15, #0f0d0a);
+  }
+  .scene-night {
+    background:
+      radial-gradient(ellipse 40% 10% at 50% 62%, rgba(226, 170, 104, 0.4), transparent 70%),
+      linear-gradient(180deg, #0e1114 0%, #141a1f 60%, #0a0c0e 60.3%, #060708 100%);
+  }
+  .scene-walnut {
+    background:
+      repeating-linear-gradient(91deg, rgba(0, 0, 0, 0.18) 0 1px, transparent 1px 7px, rgba(0, 0, 0, 0.08) 7px 9px, transparent 9px 19px, rgba(255, 214, 160, 0.05) 19px 21px, transparent 21px 31px),
+      radial-gradient(ellipse 30% 80% at 38% 50%, rgba(255, 200, 140, 0.2), transparent 70%),
+      linear-gradient(180deg, #5c3a20, #2c1b0e);
+  }
+  .scene-travertine {
+    background:
+      repeating-linear-gradient(179deg, transparent 0 9px, rgba(110, 88, 60, 0.16) 9px 10px, transparent 10px 23px, rgba(110, 88, 60, 0.1) 23px 25px),
+      radial-gradient(ellipse 50% 60% at 30% 30%, rgba(255, 255, 255, 0.18), transparent 70%),
+      linear-gradient(170deg, #d8c8ac, #b19e81);
+  }
+  .scene-boucle {
+    background:
+      radial-gradient(rgba(255, 250, 240, 0.2) 1px, transparent 1.7px) 0 0 / 7px 7px,
+      radial-gradient(rgba(0, 0, 0, 0.16) 1px, transparent 1.7px) 3px 3px / 7px 7px,
+      radial-gradient(ellipse 60% 60% at 35% 35%, rgba(255, 255, 255, 0.16), transparent 70%),
+      linear-gradient(160deg, #cdc3b1, #958a77);
+  }
+  .scene-brass {
+    background:
+      radial-gradient(ellipse 22% 70% at 35% 40%, rgba(255, 238, 196, 0.6), transparent 70%),
+      linear-gradient(100deg, #634b2b, #ab8952 45%, #55401f);
+  }
+  .scene-marble {
+    background:
+      linear-gradient(122deg, transparent 22%, rgba(255, 255, 255, 0.11) 22.3%, transparent 23.4%),
+      linear-gradient(106deg, transparent 47%, rgba(255, 255, 255, 0.07) 47.2%, transparent 48.8%),
+      linear-gradient(134deg, transparent 70%, rgba(255, 255, 255, 0.09) 70.2%, transparent 71.2%),
+      linear-gradient(150deg, #403a33, #23201c 50%, #36312a 80%, #1a1714);
+  }
+  .scene-linen {
+    background:
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.05) 0 1px, transparent 1px 3px),
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0 1px, transparent 1px 3px),
+      linear-gradient(170deg, #8b806e, #5a5144);
+  }
+  .scene-stitch {
+    background:
+      repeating-linear-gradient(90deg, transparent 0 9px, rgba(236, 226, 206, 0.72) 9px 17px) 0 calc(50% - 1px) / 100% 2px no-repeat,
+      radial-gradient(ellipse 50% 40% at 40% 30%, rgba(255, 200, 150, 0.14), transparent 70%),
+      linear-gradient(180deg, #4a2f1d 0 49.6%, #120b07 49.6% 50.4%, #3a2416 50.4%);
+  }
+  .scene-crate {
+    background:
+      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.3) 0 2px, transparent 2px 70px),
+      repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.07) 0 1px, transparent 1px 9px),
+      linear-gradient(170deg, #8a7150, #58452e);
+  }
+}
+
+/* film grain over everything */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.07;
+}
+
+/* hero scroll cue */
+@keyframes cue {
+  0% { transform: scaleY(0); transform-origin: top; }
+  45% { transform: scaleY(1); transform-origin: top; }
+  55% { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+.cue-line { animation: cue 2.6s cubic-bezier(0.6, 0, 0.3, 1) infinite; }
+
+@keyframes marquee { to { transform: translateX(-50%); } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cue-line { animation: none; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}
